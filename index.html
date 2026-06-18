@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WeatherNow</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome for Weather Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body{
+
+      font-family: Arial, sans-serif;
+
+      background: #dceff3;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-height: 100vh;
+    }
+
+    /* ONLY NEW BOX ADDED */
+    .container{
+
+      background: white;
+
+      padding: 25px;
+
+      border-radius: 15px;
+
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Date & Time -->
+    <div class="datetime" id="datetime"></div>
+
+    <!-- Heading -->
+    <h1>🌤️ WeatherNow</h1>
+
+    <!-- Input -->
+    <input type="text" id="cityInput" placeholder="Enter City Name">
+
+    <!-- Button -->
+    <button onclick="getWeather()">Get Weather</button>
+
+    <!-- Weather Card -->
+    <div class="weather-card">
+
+      <h2 id="temperature">--°C</h2>
+
+      <div id="weatherIcon">
+        <i class="fa-solid fa-cloud"></i>
+      </div>
+
+      <p id="description">Weather Description</p>
+
+      <p id="feelsLike">Feels like --°C</p>
+
+      <p id="humidity">Humidity: --%</p>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    // Live Date & Time
+    function updateDateTime() {
+      const now = new Date();
+
+      const options = {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric'
+      };
+
+      const date = now.toLocaleDateString('en-US', options);
+
+      const time = now.toLocaleTimeString();
+
+      document.getElementById("datetime").innerHTML =
+        `${date} - ${time}`;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+
+    // Weather API
+    async function getWeather() {
+
+      const apiKey = "7b68eb9fe0a23cdc869c795cd7bd3443";
+
+      const city = document.getElementById("cityInput").value;
+
+      const url =
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+      try {
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("City not found");
+        }
+
+        const data = await response.json();
+
+        displayWeather(data);
+
+      } catch (error) {
+
+        document.getElementById("temperature").innerHTML = "Error";
+        document.getElementById("description").innerHTML = error.message;
+        document.getElementById("weatherIcon").innerHTML = "";
+        document.getElementById("feelsLike").innerHTML = "";
+        document.getElementById("humidity").innerHTML = "";
+      }
+    }
+
+
+    // Display Weather
+    function displayWeather(data) {
+
+      const tempC = data.main.temp;
+      const feelsLikeC = data.main.feels_like;
+
+      const humidity = data.main.humidity;
+      const description = data.weather[0].description;
+      const weatherId = data.weather[0].id;
+
+      document.getElementById("temperature").innerHTML =
+        `${tempC.toFixed(0)}°C`;
+
+      document.getElementById("description").innerHTML =
+        description.charAt(0).toUpperCase() + description.slice(1);
+
+      document.getElementById("feelsLike").innerHTML =
+        `Feels like ${feelsLikeC.toFixed(0)}°C`;
+
+      document.getElementById("humidity").innerHTML =
+        `Humidity: ${humidity}%`;
+
+      document.getElementById("weatherIcon").innerHTML =
+        getWeatherIcon(weatherId);
+    }
+
+
+    // Weather Icons
+    function getWeatherIcon(weatherId) {
+
+      if (weatherId >= 200 && weatherId <= 232) {
+        return '<i class="fa-solid fa-cloud-bolt"></i>';
+      }
+
+      else if (weatherId >= 300 && weatherId <= 321) {
+        return '<i class="fa-solid fa-cloud-rain"></i>';
+      }
+
+      else if (weatherId >= 500 && weatherId <= 531) {
+        return '<i class="fa-solid fa-cloud-showers-heavy"></i>';
+      }
+
+      else if (weatherId >= 600 && weatherId <= 622) {
+        return '<i class="fa-solid fa-snowflake"></i>';
+      }
+
+      else if (weatherId >= 701 && weatherId <= 741) {
+        return '<i class="fa-solid fa-smog"></i>';
+      }
+
+      else if (weatherId == 762) {
+        return '<i class="fa-solid fa-volcano"></i>';
+      }
+
+      else if (weatherId == 771) {
+        return '<i class="fa-solid fa-wind"></i>';
+      }
+
+      else if (weatherId == 781) {
+        return '<i class="fa-solid fa-tornado"></i>';
+      }
+
+      else if (weatherId == 800) {
+        return '<i class="fa-solid fa-sun"></i>';
+      }
+
+      else if (weatherId >= 801 && weatherId <= 804) {
+        return '<i class="fa-solid fa-cloud"></i>';
+      }
+
+      else {
+        return '<i class="fa-solid fa-cloud"></i>';
+      }
+    }
+
+  </script>
+
+</body>
+</html>
