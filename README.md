@@ -1,54 +1,53 @@
-WeatherNow
+# WeatherNow
 
-WeatherNow is a simple and responsive weather application that allows users to search for a city and view its current weather information in real time.
+WeatherNow is a simple and responsive weather application that allows users to check the current weather conditions of a city. It displays important weather information in a clean and user-friendly interface.
 
-The application uses the OpenWeather API to fetch live weather data and displays temperature, weather conditions, feels-like temperature, humidity, and dynamic weather icons.
+## Features
 
-Features
-Search weather by city name
-Display current temperature in Celsius
-Dynamic weather icons based on weather conditions
-Display humidity percentage
-Display "Feels Like" temperature
-Live date and time
-Error handling for invalid city names
-Clean and responsive user interface
-Real-time weather data using OpenWeather API
-Technologies Used
-HTML5 – Structure of the application
-CSS3 – Styling and responsive layout
-JavaScript – Application logic and API handling
-OpenWeather API – Real-time weather data
-Font Awesome – Weather icons
-Project Structure
+* Search weather by city name
+* Displays current temperature
+* Shows weather condition
+* Displays humidity
+* Displays wind speed
+* Weather icons based on current conditions
+* Responsive design
+* Clean and simple user interface
+* Real-time weather data using Weather API
+
+## Tech Stack
+
+* **HTML5**
+* **CSS3**
+* **JavaScript**
+* **Weather API**
+* **Font Awesome**
+
+## Project Structure
+
+```text
 WeatherNow/
 │
 ├── index.html
 ├── style.css
+├── script.js
 └── README.md
-API Used
+```
 
-WeatherNow uses the OpenWeather API to retrieve current weather information.
+## How It Works
 
-The application fetches data such as:
+1. Enter the name of a city in the search box.
+2. WeatherNow sends a request to the weather API.
+3. The API returns the current weather information.
+4. The application displays the weather data on the screen.
 
-Temperature
-Feels-like temperature
-Humidity
-Weather description
-Weather condition ID
+## Weather Information
 
-The weather condition ID is used to display an appropriate weather icon.
+WeatherNow can display information such as:
 
-How It Works
-Enter a city name in the search box.
-Click the Get Weather button.
-JavaScript sends a request to the OpenWeather API.
-The API returns the current weather information.
-The application displays:
-Temperature
-Weather condition
-Feels-like temperature
-Humidity
-Current date and time
-If the city cannot be found, an error message is displayed.
+* Temperature
+* Weather condition
+* Humidity
+* Wind speed
+* Weather icon
+
+WeatherNow was created as a frontend project to practice **HTML, CSS, JavaScript, API integration, and responsive web design**.
